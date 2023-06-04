@@ -5,9 +5,9 @@ let optionsWrapper = document.getElementsByClassName("search-parameters-wrapper"
 let wikiGoogleLogo = document.getElementsByClassName("google-wiki-logo-wrapper")[0];
 
 function resize() {
-    let amount = Math.max(Math.floor(resultWrapper.clientWidth / 500), 1);
+    let amountOfResults = Math.max(Math.floor(resultWrapper.clientWidth / 500), 1);
     let newStyle = "";
-    for (let i = 0; i < amount; i++) {
+    for (let i = 0; i < amountOfResults; i++) {
         newStyle += " 1fr";
     }
     resultWrapper.style.gridTemplateColumns = newStyle;
@@ -19,13 +19,22 @@ function resize() {
         minViewsLabel.innerHTML = "min";
         quantityLabel.innerHTML = "num";
         textField.style.width = "25vw";
+
+        amount.classList.add("num-hide-arrows");
+        minViews.classList.add("num-hide-arrows");
     } else {
         startDateField.classList.remove("hide-date");
         endDateField.classList.remove("hide-date");
         minViewsLabel.innerHTML = "Min Views: ";
         quantityLabel.innerHTML = "Amount: ";
         textField.style.width = "40vw";
+
+        amount.classList.remove("num-hide-arrows");
+        minViews.classList.remove("num-hide-arrows");
     }
+
+    numberInputRightSize(amount);
+    numberInputRightSize(minViews);
 
     if (resultWrapper.clientWidth < 400){
         minViewsLabel.innerHTML = "";
@@ -47,12 +56,20 @@ function resize() {
 resize();
 
 amount.addEventListener("input", () => {
-    amount.style.width = (("" + amount.value).length + 2) * 8.8 + "px";
+    numberInputRightSize(amount);
 })
 
 minViews.addEventListener("input", () => {
-    minViews.style.width = (("" + minViews.value).length + 2) * 8.8 + "px";
+    numberInputRightSize(minViews);
 })
+
+function numberInputRightSize(field){
+    if (field.classList.contains("num-hide-arrows")){
+        field.style.width = (("" + field.value).length) * 8.8 + "px";
+    } else{
+        field.style.width = (("" + field.value).length + 2.5) * 8.8 + "px";
+    }
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     resize();
