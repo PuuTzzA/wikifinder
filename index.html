@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Wiki Finder</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.svg">
+</head>
+
+<body onresize="resize()">
+    <div class="google-wiki-logo-wrapper">
+        <img class="google-wiki-logo" src="logo.svg" alt="">
+    </div>
+
+    <div class="search-parameters-wrapper">
+
+        <div class="search-box-outer search-bar-1">
+            <div class="search-format">
+                <div class="search-item">search</div>
+                <input type="text" class="search-box-element" id="textField" placeholder="Enter search term">
+            </div>
+
+            <div class="search-box-divider"></div>
+
+            <label for="quantity" class="search-box-element label" id="quantityLabel">Amount:</label>
+            <input type="number" class="search-box-element" id="quantity" name="quantity" min="1" max="100" value="10">
+
+        </div>
+
+
+        <div class="search-box-outer search-bar-2">
+            <div>
+                <label for="minViews" class="search-box-element label" size="111" id="minViewsLabel">Min Views:</label>
+                <input type="number" class="search-box-element" id="minViews" name="minViews" min="1" max="10000000000"
+                    value="100">
+            </div>
+
+
+            <div class="search-box-divider"></div>
+
+            <div>
+                <label for="startDate" class="search-box-element label">From:</label>
+                <input type="date" class="search-box-element date-picker" id="startDate" name="startDate"
+                    value="2022-01-01">
+            </div>
+
+            <div class="search-box-divider"></div>
+
+            <div>
+                <label for="endDate" class="search-box-element label">To:</label>
+                <input type="date" class="search-box-element date-picker" id="endDate" name="endDate"
+                    value="2022-02-01">
+            </div>
+        </div>
+
+        <div class="final-options-wrapper">
+            <button class="btn" id="randomArticle">Random Articles</button>
+
+            <div class="checkbox-outer-div">
+                <label for="useMinViews" class="label checkbox-label">Show/Use min Views
+                    <input type="checkbox" class="search-box-element" id="useMinViews" name="useMinViews"
+                        checked="true">
+                    <span class="checkbox"></span>
+                </label>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="resultWrapper">
+        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="result">
+            <div class="result-title">Oh no!</div>
+            <div class="result-body">such empty</div>
+        </a>
+    </div>
+
+    <script src="logic.js"></script>
+    <script src="styleController.js"></script>
+</body>
+
+</html>

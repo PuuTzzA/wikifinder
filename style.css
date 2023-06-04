@@ -1,0 +1,355 @@
+:root {
+    --bg-color: rgb(32, 33, 36);
+    --bg-hover-color: rgb(48, 49, 52);
+    --bg-active-color: #494A4C;
+    --border-color: rgb(95, 99, 104);
+    --border-secundary-color: rgb(59, 60, 63);
+    --text-color: white;
+    --text-secundary-color: #9aa0a6;
+    --text-focus-color: #8ab4f8;
+    --text-secundary-color: rgb(154, 160, 166);
+    --text-size-big: 1.3rem;
+    --text-size-small: 1rem;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Roboto Mono', monospace;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    padding: 0;
+    margin: 0;
+}
+
+.search-parameters-wrapper {
+    width: 80%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    background-color: var(--bg-color);
+    border-bottom: 0.1px var(--border-color) solid;
+}
+
+.search-box-outer {
+    background-color: transparent;
+    padding: 0rem 2rem;
+    margin-bottom: 1rem;
+    border: 0.1rem var(--border-color) solid;
+    border-radius: 50vh;
+    color: var(--text-color);
+    font-size: var(--text-size-small);
+    display: grid;
+}
+
+.search-bar-1 {
+    grid-template-columns: repeat(4, auto);
+}
+
+.search-bar-2 {
+    grid-template-columns: repeat(5, auto);
+}
+
+.search-box-element {
+    width: fit-content;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--text-color);
+    font-size: var(--text-size-small);
+    border: none !important;
+}
+
+.search-box-element::placeholder {
+    color: var(--text-secundary-color);
+}
+
+.search-box-element:focus::placeholder {
+    color: var(--text-focus-color);
+}
+
+.search-box-element:focus {
+    color: var(--text-focus-color);
+    outline: none;
+    border: none !important;
+}
+
+input:hover {
+    color: var(--text-focus-color);
+}
+
+.label {
+    color: var(--text-secundary-color);
+}
+
+#textField {
+    width: 45vw;
+}
+
+.search-format {
+    display: grid;
+    grid-template-columns: max-content auto;
+    align-content: left;
+}
+
+.search-item {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    z-index: 1000;
+    font-size: var(--text-size-big);
+    /* Preferred icon size */
+    padding-top: 1rem;
+    padding-right: 0.5rem;
+
+    display: inline-block;
+    content: 'search';
+
+    position: relative;
+    top: 0;
+    right: 0;
+    color: var(--text-color);
+}
+
+#quantity {
+    font-size: var(--text-size-small);
+    width: 36px;
+}
+
+#minViews {
+    font-size: var(--text-size-small);
+    width: 44px;
+}
+
+.hide-date {
+    width: 1em;
+    color: transparent;
+}
+
+.date-picker::-webkit-calendar-picker-indicator {
+    color: transparent;
+    background: none;
+    z-index: 1;
+}
+
+.date-picker {
+    position: relative;
+}
+
+.date-picker::before {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: var(--text-size-big);
+
+    background: none;
+    display: block;
+    content: 'calendar_month';
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: var(--text-color);
+}
+
+.date-picker:is(:hover, :active, :focus)::before {
+    color: var(--text-focus-color);
+}
+
+.search-box-divider {
+    width: 0.05rem;
+    background-color: var(--border-secundary-color);
+    height: 100%;
+}
+
+.final-options-wrapper{
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-column-gap: 2rem;
+    grid-row-gap: 1rem;
+}
+
+.btn{
+    font-family: 'Roboto Mono', monospace;
+    font-size: var(--text-size-small);
+    color: var(--text-color);
+    border: 0.1rem var(--border-color) solid;
+    background-color: transparent;
+    border-radius: 50vh;
+    padding: 0.5rem 2rem;
+    width: max-content;
+}
+
+.btn:hover{
+    background-color: var(--bg-hover-color);
+}
+
+.btn:is(:active){
+    background-color: var(--bg-active-color);
+}
+
+.checkbox-outer-div{
+    width: 9.43rem;
+    padding: 0.5rem;
+}
+
+.checkbox-label{ 
+    display: inline-block;
+    position: relative;
+    width: max-content;
+}
+
+.checkbox-label:hover{
+    cursor: pointer;
+}
+
+.checkbox-label input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkbox { 
+    position: absolute;
+    margin-left: 1rem;
+    height: var(--text-size-small);
+    width: var(--text-size-small);
+    border: 0.15rem var(--text-secundary-color) solid;
+    border-radius: 0.2rem;
+    background-color: var(--bg-color);
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.checkbox:hover{
+    border-color: var(--text-focus-color);
+}
+
+.checkbox::before{
+    content: "";
+}
+
+.checkbox-label input:checked ~ .checkbox{
+    background-color: var(--text-focus-color);
+    border-color: var(--text-focus-color);
+}
+
+.checkbox-label input:checked ~ .checkbox::before{
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: var(--text-size-small);
+    font-weight: 1000;
+
+    background: none;
+    display: block;
+    content: 'done';
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: var(--bg-color);
+}
+
+#resultWrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.4rem;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 19rem;
+}
+
+.result {
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    padding: 1rem;
+    border: 0.1rem var(--border-color) solid;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+    animation: 0.35s ease-out 0s 1 result-appear;
+}
+
+.result:is(:hover, :focus) {
+    background-color: var(--bg-hover-color);
+}
+
+.result:active {
+    background-color: var(--bg-active-color);
+}
+
+.result-title {
+    font-size: var(--text-size-big);
+    color: white;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+}
+
+.result-body {
+    font-size: var(--text-size-small);
+    font-weight: 400;
+    color: var(--text-secundary-color);
+}
+
+@keyframes result-appear {
+    0% {
+        transform: scale(0%);
+    }
+
+    100% {
+        transform: scale(100%);
+    }
+}
+
+.google-wiki-logo-wrapper{
+    position: absolute;
+    top: 1.5rem;
+    left: 0;
+    z-index: 2;
+    width: 10%;
+    display: grid;
+    justify-content: center;
+}
+
+.google-wiki-logo{
+    width: 7rem;
+}
+
+/*
+----------------
+----Scrollbar---
+----------------
+*/
+
+::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 1rem;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--bg-hover-color);
+    border-radius: 100vh;
+    margin-block: 0.75rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-focus-color);
+}
+
+body {
+    overflow: overlay;
+}
