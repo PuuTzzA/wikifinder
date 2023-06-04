@@ -27,7 +27,7 @@ function resize() {
         textField.style.width = "40vw";
     }
 
-    if (resultWrapper.clientWidth < 350){
+    if (resultWrapper.clientWidth < 400){
         minViewsLabel.innerHTML = "";
     }
 
