@@ -27,6 +27,10 @@ function resize() {
         textField.style.width = "40vw";
     }
 
+    if (resultWrapper.clientWidth < 350){
+        minViewsLabel.innerHTML = "";
+    }
+
     if (resultWrapper.clientWidth < 600){
         finalOptionsWrapper.style.gridTemplateColumns = "max-content";
     } else{
@@ -49,3 +53,7 @@ amount.addEventListener("input", () => {
 minViews.addEventListener("input", () => {
     minViews.style.width = (("" + minViews.value).length + 2) * 8.8 + "px";
 })
+
+document.addEventListener('DOMContentLoaded', function() {
+    resize();
+ }, false);
