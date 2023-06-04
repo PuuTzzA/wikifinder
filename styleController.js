@@ -18,7 +18,7 @@ function resize() {
         endDateField.classList.add("hide-date");
         minViewsLabel.innerHTML = "min";
         quantityLabel.innerHTML = "num";
-        textField.style.width = "30vw";
+        textField.style.width = "25vw";
     } else {
         startDateField.classList.remove("hide-date");
         endDateField.classList.remove("hide-date");
