@@ -21,7 +21,7 @@
 
         <div class="search-box-outer search-bar-1">
             <div class="search-format">
-                <div class="search-item">search</div>
+                <div class="search-item" onclick="hourglassClick()">search</div>
                 <input type="text" class="search-box-element" id="textField" placeholder="Enter search term">
             </div>
 
@@ -29,7 +29,8 @@
 
             <div class="amount-wrapper">
                 <label for="quantity" class="search-box-element label" id="quantityLabel">Amount: </label>
-                <input type="number" class="search-box-element" id="quantity" name="quantity" min="1" max="100" value="10">
+                <input type="number" class="search-box-element" id="quantity" name="quantity" min="1" max="100"
+                    value="10">
             </div>
         </div>
 
@@ -44,18 +45,20 @@
 
             <div class="search-box-divider"></div>
 
-            <div>
+            <div class="date-wrapper">
                 <label for="startDate" class="search-box-element label">From:</label>
                 <input type="date" class="search-box-element date-picker" id="startDate" name="startDate"
                     value="2022-01-01">
+                <div class="date-picker-before">calendar_month</div>
             </div>
 
             <div class="search-box-divider"></div>
 
-            <div>
+            <div class="date-wrapper">
                 <label for="endDate" class="search-box-element label">To:</label>
                 <input type="date" class="search-box-element date-picker" id="endDate" name="endDate"
                     value="2022-02-01">
+                <div class="date-picker-before">calendar_month</div>
             </div>
         </div>
 

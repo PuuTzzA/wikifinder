@@ -10,6 +10,7 @@
     --text-secundary-color: rgb(154, 160, 166);
     --text-size-big: 1.3rem;
     --text-size-small: 1rem;
+    --color-error: #ee675c;
 }
 
 body {
@@ -25,7 +26,7 @@ html {
     margin: 0;
 }
 
-.google-wiki-logo-wrapper{
+.google-wiki-logo-wrapper {
     position: fixed;
     top: 1.5rem;
     left: 0;
@@ -35,7 +36,7 @@ html {
     justify-content: center;
 }
 
-.google-wiki-logo{
+.google-wiki-logo {
     width: 7rem;
 }
 
@@ -67,7 +68,7 @@ html {
     grid-template-columns: auto max-content auto;
 }
 
-.amount-wrapper{
+.amount-wrapper {
     display: grid;
     grid-template-columns: max-content max-content;
     grid-column-gap: 8px;
@@ -76,8 +77,8 @@ html {
 
 .num-hide-arrows::-webkit-outer-spin-button,
 .num-hide-arrows::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .search-bar-2 {
@@ -144,6 +145,16 @@ input:hover {
     top: 0;
     right: 0;
     color: var(--text-color);
+    user-select: none;
+}
+
+.search-item:hover {
+    color: var(--text-focus-color);
+    cursor: pointer;
+}
+
+.search-item:active {
+    color: var(--text-secundary-color);
 }
 
 #quantity {
@@ -165,13 +176,25 @@ input:hover {
     color: transparent;
     background: none;
     z-index: 1;
+    pointer-events: auto;
 }
 
 .date-picker {
     position: relative;
 }
 
-.date-picker::before {
+.date-picker:hover {
+    cursor: text;
+}
+
+.date-wrapper {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto max-content auto;
+}
+
+.date-picker-before {
+    z-index: 2;
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;
@@ -181,14 +204,51 @@ input:hover {
     display: block;
     content: 'calendar_month';
 
-    position: absolute;
-    top: 0;
-    right: 0;
+    width: max-content;
+    height: max-content;
+    position: relative;
+    top: 1rem;
+    right: calc(var(--text-size-big));
     color: var(--text-color);
 }
 
-.date-picker:is(:hover, :active, :focus)::before {
+.date-picker-before:hover {
+    cursor: pointer;
     color: var(--text-focus-color);
+}
+
+.date-picker:is(:hover, :active, :focus)~.date-picker-before,
+.date-picker:has(+ .date-picker-before:hover) {
+    color: var(--text-focus-color);
+}
+
+.date-animation{
+    animation: 0.3s ease-in-out 0s 1 wrong-date;
+}
+
+@keyframes wrong-date {
+    0% {
+        transform: translate(0);
+    }
+
+    25% {
+        transform: translate(0.2rem);
+        color: var(--color-error);
+    }
+
+    50% {
+        transform: translate(-0.2rem);
+        color: var(--color-error);
+    }
+
+    75% {
+        transform: translate(0.2rem);
+        color: var(--color-error);
+    }
+
+    100% {
+        transform: translate(0);
+    }
 }
 
 .search-box-divider {
@@ -197,14 +257,14 @@ input:hover {
     height: 100%;
 }
 
-.final-options-wrapper{
+.final-options-wrapper {
     display: grid;
     grid-template-columns: max-content max-content;
     grid-column-gap: 2rem;
     grid-row-gap: 1rem;
 }
 
-.btn{
+.btn {
     font-family: 'Roboto Mono', monospace;
     font-size: var(--text-size-small);
     color: var(--text-color);
@@ -215,26 +275,27 @@ input:hover {
     width: max-content;
 }
 
-.btn:hover{
+.btn:hover {
     background-color: var(--bg-hover-color);
+    cursor: pointer;
 }
 
-.btn:is(:active){
+.btn:is(:active) {
     background-color: var(--bg-active-color);
 }
 
-.checkbox-outer-div{
+.checkbox-outer-div {
     width: 9.43rem;
     padding: 0.5rem;
 }
 
-.checkbox-label{ 
+.checkbox-label {
     display: inline-block;
     position: relative;
     width: max-content;
 }
 
-.checkbox-label:hover{
+.checkbox-label:hover {
     cursor: pointer;
 }
 
@@ -246,7 +307,7 @@ input:hover {
     width: 0;
 }
 
-.checkbox { 
+.checkbox {
     position: absolute;
     margin-left: 1rem;
     height: var(--text-size-small);
@@ -257,20 +318,20 @@ input:hover {
     transition: border-color 0.2s, background-color 0.2s;
 }
 
-.checkbox:hover{
+.checkbox:hover {
     border-color: var(--text-focus-color);
 }
 
-.checkbox::before{
+.checkbox::before {
     content: "";
 }
 
-.checkbox-label input:checked ~ .checkbox{
+.checkbox-label input:checked~.checkbox {
     background-color: var(--text-focus-color);
     border-color: var(--text-focus-color);
 }
 
-.checkbox-label input:checked ~ .checkbox::before{
+.checkbox-label input:checked~.checkbox::before {
     font-family: 'Material Icons';
     font-weight: normal;
     font-style: normal;

@@ -6,7 +6,8 @@ let useMinViewsBox = document.getElementById("useMinViews");
 let resultWrapper = document.getElementById("resultWrapper");
 let startDateField = document.getElementById("startDate");
 let endDateField = document.getElementById("endDate");
-
+let datePickerBeforeOne = document.getElementsByClassName("date-picker-before")[0];
+let datePickerBeforeTwo = document.getElementsByClassName("date-picker-before")[1];
 
 let lastAction = "random";
 let abortControllerList = [];
@@ -47,9 +48,15 @@ startDateField.addEventListener("input", () => {
     let oldStartDate = startDate;
     startDate = startDateField.value.split("-").join("");
 
-    if (parseInt(endDate) < parseInt(startDate)) {
+    if (parseInt(endDate) <= parseInt(startDate)) {
         startDateField.value = wikiDateToHtmlDate(oldStartDate);
         startDate = oldStartDate;
+        startDateField.classList.add("date-animation");
+        datePickerBeforeOne.classList.add("date-animation");
+        setTimeout(function() {
+            startDateField.classList.remove("date-animation");
+            datePickerBeforeOne.classList.remove("date-animation");
+        }, 300)
     } else {
         if (lastAction == "random") {
             if (useMinViewsBox.checked) {
@@ -68,9 +75,15 @@ endDateField.addEventListener("input", () => {
     let date = new Date();
     let today = date.getFullYear() + "" + (date.getMonth() + 1).toString().padStart(2, "0") + date.getDate().toString().padStart(2, "0");
 
-    if (parseInt(endDate) < parseInt(startDate) || parseInt(endDate) > parseInt(today)) {
+    if (parseInt(endDate) <= parseInt(startDate) || parseInt(endDate) > parseInt(today)) {
         endDateField.value = wikiDateToHtmlDate(oldEndDate);
         endDate = oldEndDate;
+        endDateField.classList.add("date-animation");
+        datePickerBeforeTwo.classList.add("date-animation");
+        setTimeout(function() {
+            endDateField.classList.remove("date-animation");
+            datePickerBeforeTwo.classList.remove("date-animation");
+        }, 300)
     } else {
         if (lastAction == "random") {
             if (useMinViewsBox.checked) {
@@ -277,4 +290,8 @@ function abortRunningProcesses() {
         ac.abort();
     })
     abortControllerList = [];
+}
+
+function hourglassClick(){
+    getResponse(useMinViewsBox.checked);
 }

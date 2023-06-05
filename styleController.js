@@ -73,4 +73,12 @@ function numberInputRightSize(field){
 
 document.addEventListener('DOMContentLoaded', function() {
     resize();
- }, false);
+}, false);
+
+document.getElementsByClassName("date-picker-before")[0].addEventListener("click", ()=>{
+    startDateField.showPicker();
+})
+
+document.getElementsByClassName("date-picker-before")[1].addEventListener("click", ()=>{
+    endDateField.showPicker();
+})
