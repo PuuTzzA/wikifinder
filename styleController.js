@@ -38,6 +38,11 @@ function resize() {
 
     if (resultWrapper.clientWidth < 400){
         minViewsLabel.innerHTML = "";
+        document.getElementsByClassName("date-wrapper")[0].style.gridTemplateColumns = "auto max-content max-content";
+        document.getElementsByClassName("date-wrapper")[1].style.gridTemplateColumns = "auto max-content 0";
+    } else{
+        document.getElementsByClassName("date-wrapper")[0].style.gridTemplateColumns = "auto max-content auto";
+        document.getElementsByClassName("date-wrapper")[1].style.gridTemplateColumns = "auto max-content auto";
     }
 
     if (resultWrapper.clientWidth < 600){
