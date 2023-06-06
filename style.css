@@ -29,15 +29,16 @@ html {
 .google-wiki-logo-wrapper {
     position: fixed;
     top: 1.5rem;
-    left: 0;
+    left: 1.5rem;
     z-index: 2;
-    width: 10%;
     display: grid;
     justify-content: center;
+    align-content: center;
+    opacity: 0.2;
 }
 
 .google-wiki-logo {
-    width: 7rem;
+    width: 10rem;
 }
 
 .search-parameters-wrapper {
@@ -50,7 +51,7 @@ html {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     background-color: var(--bg-color);
-    border-bottom: 0.1px var(--border-color) solid;
+    border-bottom: 0.1rem var(--border-color) solid;
 }
 
 .search-box-outer {
