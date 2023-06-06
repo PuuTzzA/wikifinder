@@ -413,7 +413,7 @@ input:hover {
 ::-webkit-scrollbar-track {
     background-color: var(--bg-hover-color);
     border-radius: 100vh;
-    margin-block: 0.75rem;
+    margin-block: 0.5rem;
 }
 
 ::-webkit-scrollbar-thumb {
