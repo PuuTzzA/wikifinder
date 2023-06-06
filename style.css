@@ -27,18 +27,22 @@ html {
 }
 
 .google-wiki-logo-wrapper {
-    position: fixed;
+    position: absolute;
     top: 1.5rem;
     left: 1.5rem;
-    z-index: 2;
+    z-index: -1;
     display: grid;
     justify-content: center;
     align-content: center;
-    opacity: 0.2;
+    opacity: 0.35;
 }
 
 .google-wiki-logo {
-    width: 10rem;
+    width: 9rem;
+}
+
+.fixed{
+    position: fixed;
 }
 
 .search-parameters-wrapper {

@@ -106,11 +106,35 @@ window.addEventListener("scroll", () => {
         const endOfPage = Math.ceil(window.innerHeight + window.pageYOffset) >= document.body.offsetHeight;
 
         if (endOfPage) {
-            if (lastAction == "random"){
+            if (lastAction == "random") {
                 getRandomResponse(false);
-            } else{
+            } else {
                 getResponse(useMinViewsBox.checked, true);
             }
         }
     }, 500)
+})
+
+let offsetPosition = 0;
+let lastYOffset = window.pageYOffset;
+const searchBarWrapper = document.getElementsByClassName("search-parameters-wrapper")[0];
+const topAdditionalSpace = 5;
+
+window.addEventListener("scroll", () => {
+    if (lastYOffset < window.pageYOffset && offsetPosition > -searchBarWrapper.clientHeight - topAdditionalSpace) {
+        let delta = window.pageYOffset - lastYOffset;
+        offsetPosition -= delta;
+    } else if (lastYOffset > window.pageYOffset && offsetPosition < 0) {
+        let delta = window.pageYOffset - lastYOffset;
+        offsetPosition -= delta;
+    }
+    
+    if (offsetPosition < -searchBarWrapper.clientHeight - topAdditionalSpace) {
+        offsetPosition = -searchBarWrapper.clientHeight - topAdditionalSpace;
+    } else if (offsetPosition > 0) {
+        offsetPosition = 0;
+    }
+    
+    searchBarWrapper.style.top = offsetPosition + "px";
+    lastYOffset = window.pageYOffset;
 })
