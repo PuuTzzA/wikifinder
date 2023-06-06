@@ -102,12 +102,15 @@ function wikiDateToHtmlDate(date) {
     return dateArr.join("");
 }
 
-function getResponse(useMinViews) {
+function getResponse(useMinViews, additive = false) {
     abortRunningProcesses();
     lastAction = "search";
 
     let keyword = textField.value;
     let quantity = amount.value;
+    if (additive){
+        quantity = parseInt(quantity) + parseInt(resultWrapper.childElementCount);
+    }
 
     var url = "https://en.wikipedia.org/w/api.php";
 
@@ -129,35 +132,40 @@ function getResponse(useMinViews) {
             return response.json();
         })
         .then(async function (response) {
-            resultWrapper.innerHTML = "";
+            if (!additive){
+                resultWrapper.innerHTML = "";
+            }
 
             let nameArray = [];
 
+            let iStart = additive ? resultWrapper.childElementCount : 0;
+
             if (!useMinViews) {
-                for (let i = 0; i < response[1].length; i++) {
+                for (let i = iStart; i < response[1].length; i++) {
                     createElement(response[1][i], "-", response[3][i])
                 }
                 return;
             }
 
-            for (let i = 0; i < response[1].length; i++) {
+            for (let i = iStart; i < response[1].length; i++) {
                 const titleFormated = (response[1][i] + "").split(" ").join("_");
 
                 if (!useMinViews) {
-                    createElement(response[1][i], "-", "https://en.wikipedia.org/wiki/" + titleFormated);
+                    createElement(response[1][i], "-", response[3][i]);
                     continue;
                 }
 
                 nameArray.push({
                     title: response[1][i],
                     titleFormatted: titleFormated,
+                    hrfe: response[3][i],
                     viewsPromise: getAmountOfViewsInPeriod(titleFormated)
                 })
             }
 
             for (const element of nameArray) {
                 let views = await element.viewsPromise;
-                createElement(element.title, views, "https://en.wikipedia.org/wiki/" + element.titleFormatted);
+                createElement(element.title, views, element.hrfe);
             }
         })
         .catch(function (error) {
@@ -165,11 +173,13 @@ function getResponse(useMinViews) {
         });
 }
 
-function getRandomResponse() {
+function getRandomResponse(resetWrapper = true) {
     abortRunningProcesses();
     lastAction = "random";
 
-    resultWrapper.innerHTML = "";
+    if(resetWrapper){
+        resultWrapper.innerHTML = "";
+    }
     let quantity = amount.value;
     let min = minViews.value;
     let useMinViews = useMinViewsBox.checked;
@@ -245,9 +255,9 @@ function getRandomArticle(quantity, minViews, useMinViews, signal) {
 }
 
 function createElement(title, views, href) {
-    if (resultWrapper.childElementCount >= amount.value) {
-        return;
-    }
+    //if (resultWrapper.childElementCount >= amount.value) {
+    //    return;
+    //}
 
     const result = document.createElement("a");
     result.classList.add("result");

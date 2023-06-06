@@ -36,24 +36,24 @@ function resize() {
     numberInputRightSize(amount);
     numberInputRightSize(minViews);
 
-    if (resultWrapper.clientWidth < 400){
+    if (resultWrapper.clientWidth < 400) {
         minViewsLabel.innerHTML = "";
         document.getElementsByClassName("date-wrapper")[0].style.gridTemplateColumns = "auto max-content max-content";
         document.getElementsByClassName("date-wrapper")[1].style.gridTemplateColumns = "auto max-content 0";
-    } else{
+    } else {
         document.getElementsByClassName("date-wrapper")[0].style.gridTemplateColumns = "auto max-content auto";
         document.getElementsByClassName("date-wrapper")[1].style.gridTemplateColumns = "auto max-content auto";
     }
 
-    if (resultWrapper.clientWidth < 600){
+    if (resultWrapper.clientWidth < 600) {
         finalOptionsWrapper.style.gridTemplateColumns = "max-content";
-    } else{
+    } else {
         finalOptionsWrapper.style.gridTemplateColumns = "max-content max-content";
     }
 
-    if (resultWrapper.clientWidth < 1150){
+    if (resultWrapper.clientWidth < 1150) {
         wikiGoogleLogo.style.display = "none";
-    }else{
+    } else {
         wikiGoogleLogo.style.display = "grid";
     }
 }
@@ -68,22 +68,49 @@ minViews.addEventListener("input", () => {
     numberInputRightSize(minViews);
 })
 
-function numberInputRightSize(field){
-    if (field.classList.contains("num-hide-arrows")){
+function numberInputRightSize(field) {
+    if (field.classList.contains("num-hide-arrows")) {
         field.style.width = (("" + field.value).length) * 8.8 + "px";
-    } else{
+    } else {
         field.style.width = (("" + field.value).length + 2.5) * 8.8 + "px";
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     resize();
 }, false);
 
-document.getElementsByClassName("date-picker-before")[0].addEventListener("click", ()=>{
+document.getElementsByClassName("date-picker-before")[0].addEventListener("click", () => {
     startDateField.showPicker();
 })
 
-document.getElementsByClassName("date-picker-before")[1].addEventListener("click", ()=>{
+document.getElementsByClassName("date-picker-before")[1].addEventListener("click", () => {
     endDateField.showPicker();
+})
+
+
+var throttleTimer;
+const throttle = (callback, time) => {
+    if (throttleTimer) return;
+
+    throttleTimer = true;
+
+    setTimeout(() => {
+        callback();
+        throttleTimer = false;
+    }, time);
+};
+
+window.addEventListener("scroll", () => {
+    throttle(() => {
+        const endOfPage = Math.ceil(window.innerHeight + window.pageYOffset) >= document.body.offsetHeight;
+
+        if (endOfPage) {
+            if (lastAction == "random"){
+                getRandomResponse(false);
+            } else{
+                getResponse(useMinViewsBox.checked, true);
+            }
+        }
+    }, 500)
 })
