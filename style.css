@@ -368,7 +368,7 @@ input:hover {
     animation: 0.35s ease-out 0s 1 result-appear;
 }
 
-.result:is(:hover, :focus) {
+.result:hover {
     background-color: var(--bg-hover-color);
 }
 
