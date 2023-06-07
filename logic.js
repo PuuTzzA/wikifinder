@@ -255,9 +255,9 @@ function getRandomArticle(quantity, minViews, useMinViews, signal) {
 }
 
 function createElement(title, views, href) {
-    //if (resultWrapper.childElementCount >= amount.value) {
-    //    return;
-    //}
+    if (resultWrapper.childElementCount >= 200) {
+        resultWrapper.removeChild(resultWrapper.firstElementChild);
+    }
 
     const result = document.createElement("a");
     result.classList.add("result");

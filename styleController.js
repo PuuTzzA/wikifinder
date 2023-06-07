@@ -61,11 +61,22 @@ function resize() {
 resize();
 
 amount.addEventListener("input", () => {
+    if (amount.value < 0) {
+        amount.value = 0;
+    }
     numberInputRightSize(amount);
 })
 
 minViews.addEventListener("input", () => {
+    if (minViews.value < 0) {
+        minViews.value = 0;
+    }
     numberInputRightSize(minViews);
+    let x = 5 * Math.pow(10, Math.floor(Math.log10(minViews.value) - 1));
+    if (x < 1) {
+        x = 1;
+    }
+    minViews.setAttribute("step", x);
 })
 
 function numberInputRightSize(field) {
@@ -128,13 +139,13 @@ window.addEventListener("scroll", () => {
         let delta = window.pageYOffset - lastYOffset;
         offsetPosition -= delta;
     }
-    
+
     if (offsetPosition < -searchBarWrapper.clientHeight - topAdditionalSpace) {
         offsetPosition = -searchBarWrapper.clientHeight - topAdditionalSpace;
     } else if (offsetPosition > 0) {
         offsetPosition = 0;
     }
-    
+
     searchBarWrapper.style.top = offsetPosition + "px";
     lastYOffset = window.pageYOffset;
 })
