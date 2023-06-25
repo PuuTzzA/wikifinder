@@ -255,7 +255,7 @@ function getRandomArticle(quantity, minViews, useMinViews, signal) {
 }
 
 function createElement(title, views, href) {
-    if (resultWrapper.childElementCount >= 200) {
+    if (resultWrapper.childElementCount >= 2000) {
         resultWrapper.removeChild(resultWrapper.firstElementChild);
     }
 
