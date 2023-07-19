@@ -418,7 +418,7 @@ input:hover {
     border-radius: 0.5rem;
 
     height: max-content !important;
-    max-height: 23rem !important;
+    max-height: 20rem !important;
 
     box-shadow: 0 0 .5rem var(--text-focus-color);
     overflow: hidden;
