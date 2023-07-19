@@ -381,12 +381,14 @@ input:hover {
     color: white;
     font-weight: 500;
     margin-bottom: 0.3rem;
+    pointer-events: none;
 }
 
 .result-body {
     font-size: var(--text-size-small);
     font-weight: 400;
     color: var(--text-secundary-color);
+    pointer-events: none;
 }
 
 @keyframes result-appear {
@@ -396,6 +398,113 @@ input:hover {
 
     100% {
         transform: scale(100%);
+    }
+}
+
+/*
+---------------
+----Summary----
+---------------
+*/
+
+.summaryWrapper{
+    z-index: 1000;
+    position: fixed;
+
+    background-color: var(--bg-color);
+
+    padding: 1rem;
+    border: 0.1rem var(--text-focus-color) solid;
+    border-radius: 0.5rem;
+
+    height: max-content !important;
+    max-height: 23rem !important;
+
+    box-shadow: 0 0 .5rem var(--text-focus-color);
+    overflow: hidden;
+}
+
+.summary-img-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.summaryWrapper::before {
+    content:'';
+    width:100%;
+    height:100%;    
+    position:absolute;
+    left:0;
+    top:0;
+    pointer-events: none;
+    background:linear-gradient(transparent calc(100% - 1.6rem), var(--bg-color) calc(100% - 0.2rem)); 
+}
+
+.summary-text{
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    line-height: 1.35rem;
+    font-size: var(--text-size-small);
+    font-weight: 400;
+    color: var(--text-color);
+}
+
+.summary-img{
+    width: 100%;
+    align-self: top;
+    object-fit: cover;
+}
+
+.summary-bottom{
+    animation: 0.2s ease-out 0s 1 summary-appear-bottom;
+}
+
+.summary-arrow-top{
+    content:'';
+    width:0;
+    height:0;
+    position: fixed;
+    border: .7rem transparent solid;
+    border-bottom: .7rem var(--text-focus-color) solid;
+    animation: 0.2s ease-out 0s 1 summary-appear-bottom;
+}
+
+.summary-arrow-bottom{
+    content:'';
+    width:0;
+    height:0;
+    position: fixed;
+    border: .7rem transparent solid;
+    border-top: .7rem var(--text-focus-color) solid;
+    animation: 0.2s ease-out 0s 1 summary-appear-top;
+}
+
+.summary-top{
+    animation: 0.2s ease-out 0s 1 summary-appear-top;
+}
+
+@keyframes summary-appear-bottom {
+    0% {
+        transform: translateY(7rem);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0rem);
+        opacity: 1;
+    }
+}
+
+@keyframes summary-appear-top {
+    0% {
+        transform: translateY(-7rem);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0rem);
+        opacity: 1;
     }
 }
 

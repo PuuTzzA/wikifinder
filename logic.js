@@ -53,7 +53,7 @@ startDateField.addEventListener("input", () => {
         startDate = oldStartDate;
         startDateField.classList.add("date-animation");
         datePickerBeforeOne.classList.add("date-animation");
-        setTimeout(function() {
+        setTimeout(function () {
             startDateField.classList.remove("date-animation");
             datePickerBeforeOne.classList.remove("date-animation");
         }, 300)
@@ -80,7 +80,7 @@ endDateField.addEventListener("input", () => {
         endDate = oldEndDate;
         endDateField.classList.add("date-animation");
         datePickerBeforeTwo.classList.add("date-animation");
-        setTimeout(function() {
+        setTimeout(function () {
             endDateField.classList.remove("date-animation");
             datePickerBeforeTwo.classList.remove("date-animation");
         }, 300)
@@ -108,7 +108,7 @@ function getResponse(useMinViews, additive = false) {
 
     let keyword = textField.value;
     let quantity = amount.value;
-    if (additive){
+    if (additive) {
         quantity = parseInt(quantity) + parseInt(resultWrapper.childElementCount);
     }
 
@@ -132,7 +132,7 @@ function getResponse(useMinViews, additive = false) {
             return response.json();
         })
         .then(async function (response) {
-            if (!additive){
+            if (!additive) {
                 resultWrapper.innerHTML = "";
             }
 
@@ -177,7 +177,7 @@ function getRandomResponse(resetWrapper = true) {
     abortRunningProcesses();
     lastAction = "random";
 
-    if(resetWrapper){
+    if (resetWrapper) {
         resultWrapper.innerHTML = "";
     }
     let quantity = amount.value;
@@ -263,6 +263,8 @@ function createElement(title, views, href) {
     result.classList.add("result");
     result.href = href;
     result.target = "_blank";
+    result.onmouseover = getPreview;
+    result.onmouseout = out;
 
     const resultTitle = document.createElement("div");
     resultTitle.innerHTML = title;
@@ -302,6 +304,82 @@ function abortRunningProcesses() {
     abortControllerList = [];
 }
 
-function hourglassClick(){
+function hourglassClick() {
     getResponse(useMinViewsBox.checked);
+}
+
+let summarySingleton;
+let arrowSingleton;
+let abortControllerListSummary = [];
+
+function getPreview(e) {
+    let summaryWrapper = document.createElement("div");
+    summarySingleton = summaryWrapper;
+    let arrow = document.createElement("div");
+    arrowSingleton = arrow;
+    const url = "https://en.wikipedia.org/api/rest_v1/page/summary/" + e.srcElement.href.substring(30);
+    const ac = new AbortController;
+    abortControllerListSummary.push(ac);
+    fetch(url, { signal: ac.signal })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(async function (response) {
+            let bounds = e.srcElement.getBoundingClientRect();
+            createSummary(response, bounds, summaryWrapper, arrow);
+        })
+        .catch((error) => {
+            console.log(error)
+        });
+}
+
+function out() {
+    abortControllerListSummary.forEach((ac) => {
+        ac.abort();
+    });
+    if (document.body.contains(summarySingleton)){
+        document.body.removeChild(summarySingleton);
+        document.body.removeChild(arrowSingleton);
+    }
+}
+
+function createSummary(response, bounds, summaryWrapper, arrow) {
+    summaryWrapper.classList.add("summaryWrapper")
+
+    if (window.innerHeight / 2 > bounds.top) {
+        summaryWrapper.style.top = "calc(" + (bounds.y + bounds.height) + "px + 1.4rem)";
+        summaryWrapper.classList.add("summary-bottom");
+
+        arrow.classList.add("summary-arrow-top");
+        arrow.style.top = "calc(" + (bounds.y + bounds.height) + "px + 1px)";
+    } else {
+        summaryWrapper.style.bottom = "calc(" + (window.innerHeight - bounds.top) + "px + 1.4rem)";
+        summaryWrapper.classList.add("summary-top");
+
+        arrow.classList.add("summary-arrow-bottom");
+        arrow.style.bottom = "calc(" + (window.innerHeight - bounds.top) + "px + 1px)";
+    }
+
+    arrow.style.left = "calc(" + bounds.x + "px + 1rem)";
+
+    summaryWrapper.style.left = "calc(" + bounds.x + "px - 0.2rem)";
+    summaryWrapper.style.width = "calc(" + bounds.width + "px - 1.6rem)";
+    summaryWrapper.style.height = bounds.height + "px";
+
+    let summaryText = document.createElement("div");
+    summaryText.innerHTML = response.extract;
+    summaryText.classList.add("summary-text");
+
+    summaryWrapper.appendChild(summaryText);
+
+    if (response.thumbnail) {
+        let summaryImg = document.createElement("img");
+        summaryImg.src = response.thumbnail.source;
+        summaryImg.classList.add("summary-img");
+        summaryWrapper.appendChild(summaryImg);
+        summaryWrapper.classList.add("summary-img-wrapper");
+    }
+
+    document.body.appendChild(summarySingleton);
+    document.body.appendChild(arrowSingleton);
 }

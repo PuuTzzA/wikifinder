@@ -114,7 +114,7 @@ const throttle = (callback, time) => {
 
 window.addEventListener("scroll", () => {
     throttle(() => {
-        const endOfPage = Math.ceil(window.innerHeight + window.pageYOffset) >= document.body.offsetHeight;
+        const endOfPage = Math.ceil(window.innerHeight + window.scrollY) >= document.body.offsetHeight;
 
         if (endOfPage) {
             if (lastAction == "random") {
@@ -127,16 +127,16 @@ window.addEventListener("scroll", () => {
 })
 
 let offsetPosition = 0;
-let lastYOffset = window.pageYOffset;
+let lastYOffset = window.scrollY;
 const searchBarWrapper = document.getElementsByClassName("search-parameters-wrapper")[0];
 const topAdditionalSpace = 5;
 
 window.addEventListener("scroll", () => {
-    if (lastYOffset < window.pageYOffset && offsetPosition > -searchBarWrapper.clientHeight - topAdditionalSpace) {
-        let delta = window.pageYOffset - lastYOffset;
+    if (lastYOffset < window.scrollY && offsetPosition > -searchBarWrapper.clientHeight - topAdditionalSpace) {
+        let delta = window.scrollY - lastYOffset;
         offsetPosition -= delta;
-    } else if (lastYOffset > window.pageYOffset && offsetPosition < 0) {
-        let delta = window.pageYOffset - lastYOffset;
+    } else if (lastYOffset > window.scrollY && offsetPosition < 0) {
+        let delta = window.scrollY - lastYOffset;
         offsetPosition -= delta;
     }
 
@@ -147,5 +147,5 @@ window.addEventListener("scroll", () => {
     }
 
     searchBarWrapper.style.top = offsetPosition + "px";
-    lastYOffset = window.pageYOffset;
+    lastYOffset = window.scrollY;
 })
