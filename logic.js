@@ -298,6 +298,16 @@ async function getAmountOfViewsInPeriod(article) {
 }
 
 function abortRunningProcesses() {
+    let previews = document.getElementsByClassName("summaryWrapper");
+    for (let i = 0; i < previews.length; i++){
+        document.body.removeChild(previews[i]);
+    }
+
+    previews = document.getElementsByClassName("summary-arrow");
+    for (let i = 0; i < previews.length; i++){
+        document.body.removeChild(previews[i]);
+    }
+    
     abortControllerList.forEach((ac) => {
         ac.abort();
     })
@@ -361,6 +371,7 @@ function createSummary(response, bounds, summaryWrapper, arrow) {
     }
 
     arrow.style.left = "calc(" + bounds.x + "px + 1rem)";
+    arrow.style.classList.add("summary-arrow");
 
     summaryWrapper.style.left = "calc(" + bounds.x + "px - 0.2rem)";
     summaryWrapper.style.width = "calc(" + bounds.width + "px - 1.6rem)";
