@@ -355,7 +355,6 @@ function out() {
     arrowSingleton.style.display = "none";
     
     summaryImgSingleton.style.display = "none";
-    console.log("out")
 }
 
 function createSummary(response, bounds) {
