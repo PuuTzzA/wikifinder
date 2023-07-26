@@ -99,7 +99,6 @@ document.getElementsByClassName("date-picker-before")[1].addEventListener("click
     endDateField.showPicker();
 })
 
-
 var throttleTimer;
 const throttle = (callback, time) => {
     if (throttleTimer) return;

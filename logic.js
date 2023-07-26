@@ -189,7 +189,7 @@ function getRandomResponse(resetWrapper = true) {
     getRandomArticle(quantity, min, useMinViews, ac.signal);
 }
 
-function getRandomArticle(quantity, minViews, useMinViews, signal) {
+function getRandomArticle(quantity, minViews, useMinViews, signal) {   
     var url = "https://en.wikipedia.org/w/api.php";
 
     var params = {
@@ -302,21 +302,22 @@ function abortRunningProcesses() {
         ac.abort();
     })
     abortControllerList = [];
+    abortControllerListSummary.forEach( ac => {
+        ac.abort();
+    })
 }
 
 function hourglassClick() {
     getResponse(useMinViewsBox.checked);
 }
 
-let summarySingleton;
-let arrowSingleton;
+const summarySingleton = document.getElementById("summary-wrapper");
+const arrowSingleton = document.getElementById("summary-arrow");
+const summaryTextSingleton = summarySingleton.childNodes[1];
+const summaryImgSingleton = summarySingleton.childNodes[3];
 let abortControllerListSummary = [];
 
 function getPreview(e) {
-    let summaryWrapper = document.createElement("div");
-    summarySingleton = summaryWrapper;
-    let arrow = document.createElement("div");
-    arrowSingleton = arrow;
     const url = "https://en.wikipedia.org/api/rest_v1/page/summary/" + e.srcElement.href.substring(30);
     const ac = new AbortController;
     abortControllerListSummary.push(ac);
@@ -326,7 +327,7 @@ function getPreview(e) {
         })
         .then(async function (response) {
             let bounds = e.srcElement.getBoundingClientRect();
-            createSummary(response, bounds, summaryWrapper, arrow);
+            createSummary(response, bounds);
         })
         .catch((error) => {
             console.log(error)
@@ -337,49 +338,58 @@ function out() {
     abortControllerListSummary.forEach((ac) => {
         ac.abort();
     });
-    if (document.body.contains(summarySingleton)){
-        document.body.removeChild(summarySingleton);
-        document.body.removeChild(arrowSingleton);
-    }
+    summarySingleton.className = "";
+    arrowSingleton.className = "";
+
+    summarySingleton.style.top = null;
+    summarySingleton.style.bottom = null;
+    summarySingleton.style.left = null;
+    summarySingleton.style.right = null;
+
+    arrowSingleton.style.top = null;
+    arrowSingleton.style.bottom = null;
+    arrowSingleton.style.left = null;
+    arrowSingleton.style.right = null;
+    
+    summarySingleton.style.display = "none";
+    arrowSingleton.style.display = "none";
+    
+    summaryImgSingleton.style.display = "none";
+    console.log("out")
 }
 
-function createSummary(response, bounds, summaryWrapper, arrow) {
-    summaryWrapper.classList.add("summaryWrapper")
+function createSummary(response, bounds) {
+    summarySingleton.classList.add("summaryWrapper")
 
     if (window.innerHeight / 2 > bounds.top) {
-        summaryWrapper.style.top = "calc(" + (bounds.y + bounds.height) + "px + 1.4rem)";
-        summaryWrapper.classList.add("summary-bottom");
+        summarySingleton.style.top = "calc(" + (bounds.y + bounds.height) + "px + 1.4rem)";
+        summarySingleton.classList.add("summary-bottom");
 
-        arrow.classList.add("summary-arrow-top");
-        arrow.style.top = "calc(" + (bounds.y + bounds.height) + "px + 1px)";
+        arrowSingleton.classList.add("summary-arrow-top");
+        arrowSingleton.style.top = "calc(" + (bounds.y + bounds.height) + "px + 1px)";
     } else {
-        summaryWrapper.style.bottom = "calc(" + (window.innerHeight - bounds.top) + "px + 1.4rem)";
-        summaryWrapper.classList.add("summary-top");
+        summarySingleton.style.bottom = "calc(" + (window.innerHeight - bounds.top) + "px + 1.4rem)";
+        summarySingleton.classList.add("summary-top");
 
-        arrow.classList.add("summary-arrow-bottom");
-        arrow.style.bottom = "calc(" + (window.innerHeight - bounds.top) + "px + 1px)";
+        arrowSingleton.classList.add("summary-arrow-bottom");
+        arrowSingleton.style.bottom = "calc(" + (window.innerHeight - bounds.top) + "px + 1px)";
     }
 
-    arrow.style.left = "calc(" + bounds.x + "px + 1rem)";
+    arrowSingleton.style.left = "calc(" + bounds.x + "px + 1rem)";
 
-    summaryWrapper.style.left = "calc(" + bounds.x + "px - 0.2rem)";
-    summaryWrapper.style.width = "calc(" + bounds.width + "px - 1.6rem)";
-    summaryWrapper.style.height = bounds.height + "px";
+    summarySingleton.style.left = "calc(" + bounds.x + "px - 0.2rem)";
+    summarySingleton.style.width = "calc(" + bounds.width + "px - 1.6rem)";
+    summarySingleton.style.height = bounds.height + "px";
 
-    let summaryText = document.createElement("div");
-    summaryText.innerHTML = response.extract;
-    summaryText.classList.add("summary-text");
-
-    summaryWrapper.appendChild(summaryText);
+    summaryTextSingleton.innerHTML = response.extract;
+    summaryTextSingleton.classList.add("summary-text");
 
     if (response.thumbnail) {
-        let summaryImg = document.createElement("img");
-        summaryImg.src = response.thumbnail.source;
-        summaryImg.classList.add("summary-img");
-        summaryWrapper.appendChild(summaryImg);
-        summaryWrapper.classList.add("summary-img-wrapper");
+        summaryImgSingleton.src = response.thumbnail.source;
+        summarySingleton.classList.add("summary-img-wrapper");
+        summaryImgSingleton.style.display = "block";
     }
 
-    document.body.appendChild(summarySingleton);
-    document.body.appendChild(arrowSingleton);
+    summarySingleton.style.display = "block";
+    arrowSingleton.style.display = "block";
 }
