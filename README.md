@@ -1,6 +1,6 @@
 # wikifinder
 
-A quick way to find random Wikipedia articles with more than a specified amount of views.
+A quick way to find random Wikipedia Articles or get the amount of Views of a specific article.
 
 Hosted via Github pages on: https://puutzza.github.io/wikifinder/
 
