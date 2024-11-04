@@ -8,11 +8,27 @@ let startDateField = document.getElementById("startDate");
 let endDateField = document.getElementById("endDate");
 let datePickerBeforeOne = document.getElementsByClassName("date-picker-before")[0];
 let datePickerBeforeTwo = document.getElementsByClassName("date-picker-before")[1];
+let modeIndicator = document.getElementById("mode-indicator");
 
 let lastAction = "random";
 let abortControllerList = [];
 let startDate = "20220101";
-let endDate = "20220201"
+let endDate = "20220201";
+
+const date = new Date();
+
+let day = date.getDate();
+let month = date.getMonth() + 1;
+let year = date.getFullYear();
+
+endDate = `${year}${month.toString().padStart(2, '0')}${day.toString().padStart(2, '0')}`;
+startDate = `${year -1 }${month.toString().padStart(2, '0')}${day.toString().padStart(2, '0')}`;
+
+startDateField.value = wikiDateToHtmlDate(startDate);
+endDateField.value = wikiDateToHtmlDate(endDate);
+
+let randomModeText = ""
+let searchModeText = ""
 
 textField.addEventListener("keyup", (event) => {
     getResponse(useMinViewsBox.checked);
@@ -104,6 +120,7 @@ function wikiDateToHtmlDate(date) {
 
 function getResponse(useMinViews, additive = false) {
     abortRunningProcesses();
+    setSearchModeIndicator();
     lastAction = "search";
 
     let keyword = textField.value;
@@ -175,6 +192,7 @@ function getResponse(useMinViews, additive = false) {
 
 function getRandomResponse(resetWrapper = true) {
     abortRunningProcesses();
+    setRandomModeIndicator();
     lastAction = "random";
 
     if (resetWrapper) {
@@ -242,7 +260,7 @@ function getRandomArticle(quantity, minViews, useMinViews, signal) {
                 }
             }
 
-            console.log("ERROR AOUNT: " + (quantity - correctAmount));
+            console.log("NOT ENOUGH VIEWS AMOUNT: " + (quantity - correctAmount));
             if (quantity - correctAmount > 0 && useMinViews && !signal.aborted) {
                 const ac = new AbortController;
                 abortControllerList.push(ac);
@@ -391,4 +409,25 @@ function createSummary(response, bounds) {
 
     summarySingleton.style.display = "block";
     arrowSingleton.style.display = "block";
+}
+
+for(let i = 0; i < 20; i++){
+    for(let j = 0; j < 20; j++){
+        randomModeText += "RANDOM ";
+        searchModeText += "SEARCH ";
+    }
+    randomModeText += "\n";
+    searchModeText += "\n";
+}
+
+function setRandomModeIndicator(){
+    modeIndicator.innerHTML = randomModeText;
+    modeIndicator.classList.remove("indicator-search-mode");
+    modeIndicator.classList.add("indicator-random-mode");
+}
+
+function setSearchModeIndicator(){
+    modeIndicator.innerHTML = searchModeText;
+    modeIndicator.classList.remove("indicator-random-mode");
+    modeIndicator.classList.add("indicator-search-mode");
 }

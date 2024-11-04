@@ -8,8 +8,11 @@
     --text-secundary-color: #9aa0a6;
     --text-focus-color: #8ab4f8;
     --text-secundary-color: rgb(154, 160, 166);
+    --text-random-mode-indicator: rgba(168, 255, 235, 0.03);
+    --text-search-mode-indicator: rgba(255, 215, 135, 0.042);
     --text-size-big: 1.3rem;
     --text-size-small: 1rem;
+    --text-size-mode-indicator: 3.79rem;
     --color-error: #ee675c;
 }
 
@@ -24,6 +27,31 @@ body {
 html {
     padding: 0;
     margin: 0;
+}
+
+#mode-indicator{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100vh;
+    z-index: -1;
+    font-size: var(--text-size-mode-indicator);
+    line-height: var(--text-size-mode-indicator);
+    font-family: "Anton", sans-serif;
+    font-weight: 1000;
+    font-style: normal;  
+    color: rgba(0, 0, 0, 0);   
+    filter: blur(0.04rem);
+    -webkit-filter: blur(0.04rem);  
+}
+
+.indicator-search-mode{
+    color: var(--text-search-mode-indicator) !important;   
+}
+
+.indicator-random-mode{
+    color: var(--text-random-mode-indicator) !important;
 }
 
 .google-wiki-logo-wrapper {
@@ -360,6 +388,7 @@ input:hover {
 
 .result {
     font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
     text-decoration: none;
     padding: 1rem;
     border: 0.1rem var(--border-color) solid;
@@ -535,5 +564,5 @@ input:hover {
 }
 
 body {
-    overflow: overlay;
+    overflow-y: scroll;
 }
